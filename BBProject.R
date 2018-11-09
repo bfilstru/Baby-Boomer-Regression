@@ -3,7 +3,7 @@
 #==============================================================================
 
 # original scripts by Bill Sundstrom, Michael Kevane and Matt Holian 
-# This version combines various earlier scripts and is by Ben Filstrup 11/1/2018
+# This version combines various earlier scripts and is by Ben Filstrup 11/8/2018
 # Carries out regression on migration
 
 #==============================================================================
@@ -94,25 +94,19 @@ ageGate2 = subset(ageGate, GQ!=3 )
 # stargazer(data, type="text", summary.stat=c("n", "mean", "median", "sd", "min", "max" ), digits=2, title="SW EE 4.2", out = "Table_EE4.2_sumstats.txt")
 
 # summary statistics for a subsample
-stargazer(ageGate2, type="text", summary.stat=c("n", "mean", "median", "sd", "min", "max" ), digits=2, title="Summary Statistics Age Gated", out = "Summary Statistics Age Gated.txt")
+stargazer(ageGate2, type="text", summary.stat=c("n", "mean", "median", "sd", "min", "max" ), digits=2, title="Summary Statistics", out = "Summary_Statistics.txt")
 
 # difference in means test
 
-# t.test(migrated~AGE, data=babyBoomersMigration, FUN=c(mean), na.rm=TRUE)
-
-# scatterplot
-
-# ggplot(data=earningsheight, aes(x=height, y=earnings))+geom_point(shape=1)+labs(title="Earnings Height")+labs(x="Height", y="Earnings")
+# t.test(migrated~LESSTHAN25K, data=ageGate2, FUN=c(mean), na.rm=TRUE)
 
 # scatterplot with regression line
 ggplot(data=ageGate2, aes(x=LESSTHAN25K, y=MIGRATED))+geom_point(shape=1)+labs(title="Migration Logit")+labs(x="Income less than 25k", y="Migrated")+geom_smooth(method=lm)
 
 # running regressions;
+
 # standard order
 # reg1 = lm(MIGRATED~AGE+FEMALE+BLACK+AMERICANINDIAN_OR_ALASKANATIVE+ASIAN_OR_PACIFICISLANDER+OTHER_OR_MULTIPLE+HISPANIC+CHILD+LESSTHANHIGH+BACHELORSDEG+GRADUATEDEG+DISABILITY+VETERAN+MARRIED+INLABFORCE+LESSTHAN25K+BET25KTO50K+BET100KTO250K+MORETHAN250K, data=ageGate2)
-
-# income focused order
-# reg1 = lm(MIGRATED~LESSTHAN25K+BET25KTO50K+BET100KTO250K+MORETHAN250K+AGE+FEMALE+BLACK+AMERICANINDIAN_OR_ALASKANATIVE+ASIAN_OR_PACIFICISLANDER+OTHER_OR_MULTIPLE+HISPANIC+CHILD+LESSTHANHIGH+BACHELORSDEG+GRADUATEDEG+DISABILITY+VETERAN+MARRIED+INLABFORCE, data=ageGate2)
 
 # income focused order w/ weights
 reg1 = lm(MIGRATED~LESSTHAN25K+BET25KTO50K+BET100KTO250K+MORETHAN250K+AGE+FEMALE+BLACK+AMERICANINDIAN_OR_ALASKANATIVE+ASIAN_OR_PACIFICISLANDER+OTHER_OR_MULTIPLE+HISPANIC+CHILD+LESSTHANHIGH+BACHELORSDEG+GRADUATEDEG+DISABILITY+VETERAN+MARRIED+INLABFORCE, data=ageGate2)
@@ -123,7 +117,7 @@ reg2 = lm(MIGRATED~LESSTHAN25K+BET25KTO50K+BET100KTO250K+MORETHAN250K+AGE+FEMALE
 stargazer(reg1, reg2,
           se=list(cse(reg1), cse(reg2)), 
           title="Elderly Migration Regression (Wage)", type="text", 
-          df=FALSE, digits=3, out="Elderly_Migration_Wage")
+          df=FALSE, digits=3, out="Regression_Results.txt")
 
 # summed values from data
 
