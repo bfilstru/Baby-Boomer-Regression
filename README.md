@@ -76,7 +76,7 @@ type appended to each respective variable.
   as:
     - "Summary_Statistics_MEGA_2009_2011.txt"
     - "Summary_Statistics_MEGA_2015_2017.txt"
-  Additionally, the regression output will be saved to your working
+  - Additionally, the regression output will be saved to your working
   directory as:
     - "Regression_Results_MEGA.txt"
   - IMPORTANT: If you receive a message like this: "Error: cannot 
